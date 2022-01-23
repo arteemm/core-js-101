@@ -20,8 +20,10 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
+  this.getArea = () => this.width * this.height;
 }
 
 
@@ -35,8 +37,8 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -111,28 +113,54 @@ function fromJSON(/* proto, json */) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    this.$element = `${value}`;
+    return this;
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    this.$id = `#${value}`;
+    return this;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    this.$class += `.${value}`;
+    return this;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    this.$attr = `[${value}]`;
+    return this;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    this.$pseudoClass += `:${value}`;
+    return this;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    this.$pseudoElement = `::${value}`;
+    return this;
+  },
+
+  // combine(/* selector1, combinator, selector2 */) {
+  //   throw new Error('Not implemented');
+  // },
+
+  stringify() {
+    const element = this.$element || '';
+    this.$element = '';
+    const id = this.$id || '';
+    this.$id = '';
+    const c = this.$class || '';
+    this.$class = '';
+    const attr = this.$attr || '';
+    this.$attr = '';
+    const pseudoClass = this.$pseudoClass || '';
+    this.$pseudoClass = '';
+    const pseudoElement = this.$pseudoElement || '';
+    this.$pseudoElement = '';
+    return `${element}${id}${c}${attr}${pseudoClass}${pseudoElement}`;
   },
 
   combine(/* selector1, combinator, selector2 */) {
