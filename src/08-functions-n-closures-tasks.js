@@ -65,8 +65,18 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
+function getPolynom(/* ...args */) {
   throw new Error('Not implemented');
+  // const arr = [...args];
+  // const map = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+  // if (arr.length === 3) {
+
+  // }
+  // if (arr.length === 2) {
+  //   return arr[0] + arr[1];
+  // }
+  // if (arr.length === 1) return arr[0];
+  // return null;
 }
 
 
@@ -84,8 +94,9 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  this.r = func();
+  return () => this.r;
 }
 
 
@@ -106,6 +117,14 @@ function memoize(/* func */) {
  */
 function retry(/* func, attempts */) {
   throw new Error('Not implemented');
+  // this.attempts = attempts;
+  // try {
+  //   this.attempts += 1;
+  //   func();
+  // } catch (error) {
+  //   this.attempts += 1;
+  // }
+  // return () => this.attempts;
 }
 
 
@@ -134,6 +153,12 @@ function retry(/* func, attempts */) {
  */
 function logger(/* func, logFunc */) {
   throw new Error('Not implemented');
+  // this.f = func;
+  // this.l = logFunc;
+  // return (a) => {
+  //   console.log(`${func(a)} start`);
+  //   console.log(`${func(a)} end`);
+  // };
 }
 
 
@@ -150,8 +175,8 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => fn(...args1, ...args2);
 }
 
 
@@ -172,8 +197,16 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  function Tt(r) {
+    this.s = r - 1;
+    this.show = () => {
+      this.s += 1;
+      return this.s;
+    };
+  }
+  const p = new Tt(startFrom);
+  return p.show;
 }
 
 
